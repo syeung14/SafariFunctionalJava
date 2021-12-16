@@ -34,7 +34,11 @@ public class Student {
     return courses;
   }
 
-  @Override
+  public static CriterionStudent getSmartCriterion() {
+    return (Student s) -> {
+      return s.getGrade() > 70;
+    };
+  }
   public String toString() {
     return "Student{" +
         "name='" + name + '\'' +
