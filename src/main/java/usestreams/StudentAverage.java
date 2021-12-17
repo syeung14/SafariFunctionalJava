@@ -4,8 +4,6 @@ import students2.Student;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 class Average {
   private double sum;
@@ -18,6 +16,10 @@ class Average {
 
   public Average merge(Average other) {
     return new Average(this.sum + other.sum, this.count + other.count);
+  }
+
+  public double getTheAverage() {
+    return sum / count;
   }
 
   public Optional<Double> get() {
@@ -50,8 +52,13 @@ public class StudentAverage {
             "Astrophysics", "Quantum mechanics")
     );
 
-    school.stream()
+    Optional<Average> oa = school.stream()
         .filter(s -> s.getCourses().contains("Math"))
-        .forEach(s -> System.out.println(s));
+        .filter(s -> s.getCourses().contains("Algebra"))
+        .map(s -> new Average(s.getGrade(), 1))
+        .reduce((a1, a2) -> a1.merge(a2));
+    oa.ifPresent(a -> System.out.println("average is " +
+        a.getTheAverage()));
+    System.out.println("All done");
   }
 }
