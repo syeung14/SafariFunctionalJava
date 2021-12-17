@@ -46,5 +46,12 @@ public class UseSuperIterable {
         .flatMap(s -> new SuperIterable<>(s.getCourses()))
 //        .map(s -> s.length())
         .forEach(s -> System.out.println(s));
+
+    school
+        .flatMap((Student s) -> {
+          return new SuperIterable<>(s.getCourses())
+              .map(c -> s.getName() + " takes " + c);
+        })
+        .forEach(s -> System.out.println(s));
   }
 }
